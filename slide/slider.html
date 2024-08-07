@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+    body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: azure;
+        }
+        .slider {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            max-width: 100%;
+        }
+        .slides {
+            display: flex;
+            height: 100%;
+        }
+        .slides img {
+            width: 600px;
+            height: 400px;
+            object-fit: cover;
+            display: none;
+        }
+        .slides img.active {
+            display: block;
+        }
+        .buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        .buttons button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .dots button {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            width: 10px;
+            height: 10px;
+            margin: 0 5px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .dots button.active {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+</style>
+
+</head>
+<body>
+  <div class="slider">
+    <div class="slides">
+        <img src="image 1.jpg" alt="Photo 1" class="active">
+        <img src="image 2.jpg" alt="Photo 2">
+        <img src="image 3.jpg" alt="Photo 3">
+        <img src="image 4.jpg" alt="Photo 4">
+        <img src="image 5.jpg" alt="Photo 5">
+        <img src="image 6.jpg" alt="Photo 6">
+        <img src="image 7.jpg" alt="Photo 7">
+        <img src="image 8.jpg" alt="Photo 8">
+    </div>
+    <div class="buttons">
+        <button id="prev">Prev</button>
+        <button id="next">Next</button>
+    </div>
+    <div class="dots">
+        <button class="active"></button>
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
+    </div>
+  </div>
+<script>
+    const slides = document.querySelectorAll('.slides img');
+    const prevButton = document.getElementById('prev');
+    const nextButton = document.getElementById('next');
+    const dots = document.querySelectorAll('.dots button');
+
+    let currentSlide = 0;
+
+    function updateSlide(index){
+     slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+        dots[i].classList.toggle('active', i === index);
+     });
+     prevButton.style.display = index === 0 ? 'none' : 'block';
+     nextButton.style.display = index === slides.length - 1 ? 'none' : 'block';
+    }
+
+    prevButton.addEventListener('click', () =>{
+        if(currentSlide > 0){
+            currentSlide--;
+            updateSlide(currentSlide);
+        }
+    });
+
+    nextButton.addEventListener('click', () =>{
+        if(currentSlide < slides.length - 1){
+            currentSlide++;
+            updateSlide(currentSlide);
+        }
+    });
+
+    dots.forEach((dot, index) =>{
+        dot.addEventListener('click', () =>{
+            currentSlide = index;
+            updateSlide(currentSlide);
+        });
+    });
+    updateSlide(currentSlide);
+
+</script>
+</body>
+</html>
